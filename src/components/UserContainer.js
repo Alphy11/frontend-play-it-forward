@@ -1,37 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import User from './User';
+import Loader from './Loader';
+import useNetworkResource from '../hooks/useNetworkResource';
 
-class UserContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: '',
-    };
+function UserContainer({ onLogout, currentUser, match }) {
+  const { user_id: userId } = match.params;
+
+  const [user, fetched, { error, forceRetry }] = useNetworkResource(
+    `http://localhost:3000/volunteers/${userId}`,
+  );
+
+  if (!currentUser) {
+    return <Redirect to="/login" />;
   }
-
-  componentDidMount() {
-    fetch(`http://localhost:3000/volunteers/${this.props.match.params.user_id}`)
-      .then(resp => resp.json())
-      .then(json => {
-        this.setState({
-          user: json,
-        });
-      });
-  }
-
-  render() {
-    console.log(this.props);
+  if (error) {
     return (
       <div>
-        {this.props.currentUser ? (
-          <User user={this.state.user} onLogout={this.props.onLogout} />
-        ) : (
-          <Redirect to="/login" />
-        )}
+        Sorry an error occurred. <button onClick={forceRetry}>retry</button>
       </div>
     );
   }
+
+  if (!fetched) {
+    return <Loader />;
+  }
+
+  return (
+    <div>
+      <User user={user} onLogout={onLogout} />
+    </div>
+  );
 }
 
 export default UserContainer;

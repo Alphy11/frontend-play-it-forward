@@ -43,7 +43,9 @@ function App() {
         <Route
           exact
           path="/users/:user_id"
-          render={routerProps => <UserContainer {...routerProps} onLogout={logout} />}
+          render={routerProps => (
+            <UserContainer {...routerProps} onLogout={logout} currentUser={currentUser} />
+          )}
         />
         <Route exact path="/organizations" component={OrganizationContainer} />
         <Route

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const User = props => {
   console.log(props);
-  console.log(props.user.id);
 
   const deleteVol = () => {
     fetch(`http://localhost:3000/volunteers/${props.user.id}`, {
