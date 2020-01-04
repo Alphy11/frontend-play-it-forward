@@ -24,7 +24,7 @@ class UserContainer extends React.Component {
     console.log(this.props);
     return (
       <div>
-        {this.props.isLoggedIn ? (
+        {this.props.currentUser ? (
           <User user={this.state.user} onLogout={this.props.onLogout} />
         ) : (
           <Redirect to="/login" />

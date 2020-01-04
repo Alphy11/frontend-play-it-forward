@@ -43,7 +43,7 @@ class EventDetails extends React.Component {
           <Segment>{this.state.event.location}</Segment>
           <Segment>{this.state.event.description}</Segment>
           <Segment>{`${this.state.event.volunteers.length} Attending`}</Segment>
-          {this.props.isLoggedIn ? <Button onClick={this.attendEvent}>Attend</Button> : <span />}
+          {this.props.currentUser ? <Button onClick={this.attendEvent}>Attend</Button> : <span />}
         </Segment.Group>
       </div>
     );

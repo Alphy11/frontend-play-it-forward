@@ -39,7 +39,7 @@ class Login extends React.Component {
   };
 
   render() {
-    if (this.props.isLoggedIn) {
+    if (this.props.currentUser) {
       return <Redirect to="/" />;
     }
     return (
