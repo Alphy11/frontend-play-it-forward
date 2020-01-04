@@ -16,112 +16,71 @@ import EventDetail from './components/EventDetail';
 import EditVolunteer from './components/EditVolunteer';
 import './App.css';
 
-class App extends React.Component {
-   constructor() {
-      super();
-      this.state = {
-         isLoggedIn: false,
-         currentUser: '',
-      };
-   }
-
-   login = user => {
-      console.log('Logging In', user);
-      this.setState({
-         isLoggedIn: true,
-         currentUser: user,
-      });
+function App() {
+   const [currentUser, setUser] = React.useState('');
+   const login = user => {
+      setUser(user);
    };
-
-   logout = () => {
-      console.log('logging out');
-      this.setState({
-         isLoggedIn: false,
-         currentUser: '',
-      });
+   const logout = () => {
+      setUser('');
    };
-
-   render() {
-      return (
-         <Router>
-            <div>
-               <NavBar
-                  isLoggedIn={this.state.isLoggedIn}
-                  currentUser={this.state.currentUser}
-               />
-               <Route exact path="/" component={Home} />
-               <Route exact path="/about" component={About} />
-               <Route
-                  exact
-                  path="/login"
-                  render={() => (
-                     <Login
-                        onLogin={this.login}
-                        currentUser={this.state.currentUser}
-                        isLoggedIn={this.state.isLoggedIn}
-                     />
-                  )}
-               />
-               <Route
-                  exact
-                  path="/signup"
-                  render={() => (
-                     <SignUp
-                        onLogin={this.login}
-                        currentUser={this.state.currentUser}
-                        isLoggedIn={this.state.isLoggedIn}
-                     />
-                  )}
-               />
-               <Route
-                  exact
-                  path="/users/:user_id"
-                  render={routerProps => (
-                     <UserContainer
-                        {...routerProps}
-                        onLogout={this.logout}
-                        isLoggedIn={this.state.isLoggedIn}
-                     />
-                  )}
-               />
-               <Route
-                  exact
-                  path="/organizations"
-                  component={OrganizationContainer}
-               />
-               <Route
-                  exact
-                  path="/organizations/:id"
-                  render={routerProps => <OrganizationCard {...routerProps} />}
-               />
-               <Route exact path="/events" component={Event} />
-               <Route
-                  exact
-                  path="/volunteer/edit"
-                  render={routerProps => (
-                     <EditVolunteer
-                        {...routerProps}
-                        currentUser={this.state.currentUser}
-                     />
-                  )}
-               />
-               <Route exact path="/events/new" component={NewEvent} />
-               <Route
-                  exact
-                  path="/events/:id"
-                  render={routerProps => (
-                     <EventDetail
-                        {...routerProps}
-                        currentUser={this.state.currentUser}
-                        isLoggedIn={this.state.isLoggedIn}
-                     />
-                  )}
-               />
-               <Footer />
-            </div>
-         </Router>
-      );
-   }
+   return (
+      <Router>
+         <div>
+            <NavBar currentUser={currentUser} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route
+               exact
+               path="/login"
+               render={() => (
+                  <Login onLogin={login} currentUser={currentUser} />
+               )}
+            />
+            <Route
+               exact
+               path="/signup"
+               render={() => (
+                  <SignUp onLogin={login} currentUser={currentUser} />
+               )}
+            />
+            <Route
+               exact
+               path="/users/:user_id"
+               render={routerProps => (
+                  <UserContainer {...routerProps} onLogout={logout} />
+               )}
+            />
+            <Route
+               exact
+               path="/organizations"
+               component={OrganizationContainer}
+            />
+            <Route
+               exact
+               path="/organizations/:id"
+               render={routerProps => <OrganizationCard {...routerProps} />}
+            />
+            <Route exact path="/events" component={Event} />
+            <Route
+               exact
+               path="/volunteer/edit"
+               render={routerProps => (
+                  <EditVolunteer {...routerProps} currentUser={currentUser} />
+               )}
+            />
+            <Route exact path="/events/new" component={NewEvent} />
+            <Route
+               exact
+               path="/events/:id"
+               render={routerProps => (
+                  <EventDetail {...routerProps} currentUser={currentUser} />
+               )}
+            />
+            <Footer />
+         </div>
+      </Router>
+   );
 }
 
 export default App;
