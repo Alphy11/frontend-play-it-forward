@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
-import EventCard from './EventCard';
-import useNetworkResource from '../hooks/useNetworkResource';
+import EventCard from '../Events/EventCard';
+import useNetworkResource from '../../hooks/useNetworkResource';
 
 const OrganizationCard = ({ match }) => {
   const [organization, fetched] = useNetworkResource(

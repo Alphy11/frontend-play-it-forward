@@ -1,6 +1,6 @@
 import React from 'react';
 import EventCard from './EventCard';
-import useNetworkResource from '../hooks/useNetworkResource';
+import useNetworkResource from '../../hooks/useNetworkResource';
 
 const EventContainer = () => {
   const [events, fetched] = useNetworkResource(`http://localhost:3000/events`);

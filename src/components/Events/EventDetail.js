@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import useNetworkResource from '../hooks/useNetworkResource';
+import useNetworkResource from '../../hooks/useNetworkResource';
 
 const EventDetails = ({ currentUser, match }) => {
   const [event, fetched] = useNetworkResource(`http://localhost:3000/events/${match.params.id}`);

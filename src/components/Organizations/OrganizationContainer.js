@@ -1,6 +1,6 @@
 import React from 'react';
 import Organization from './Organization';
-import useNetworkResource from '../hooks/useNetworkResource';
+import useNetworkResource from '../../hooks/useNetworkResource';
 
 const OrganizationContainer = () => {
   const [organizations, fetched] = useNetworkResource('http://localhost:3000/organizations');

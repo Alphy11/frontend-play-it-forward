@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Button, Radio, Form } from 'semantic-ui-react';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -12,27 +12,24 @@ const Login = ({ currentUser, onLogin }) => {
     setUsername(e.target.value);
   };
 
-  const handleSubmit = useCallback(
-    () => e => {
-      e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault();
 
-      fetch(`http://localhost:3000/${userType}s-login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-        }),
+    fetch(`http://localhost:3000/${userType}s-login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+      }),
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        onLogin(json);
       })
-        .then(resp => resp.json())
-        .then(json => {
-          onLogin(json);
-        })
-        .catch(err => console.log('Invalid Username'));
-    },
-    [userType, username],
-  );
+      .catch(err => console.log('Invalid Username'));
+  };
 
   if (currentUser) {
     return <Redirect to="/" />;
