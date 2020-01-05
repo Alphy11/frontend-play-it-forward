@@ -1,39 +1,22 @@
 import React from 'react';
 import Organization from './Organization';
+import useNetworkResource from '../hooks/useNetworkResource';
 
-class OrganizationContainer extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      organizations: [],
-    };
+const OrganizationContainer = () => {
+  const [organizations, fetched] = useNetworkResource('http://localhost:3000/organizations');
+
+  if (!fetched) {
+    return null;
   }
 
-  componentDidMount() {
-    fetch('http://localhost:3000/organizations')
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
-        this.setState({
-          organizations: data,
-        });
-      });
-  }
-
-  createOrgCards = () => {
-    return this.state.organizations.map(org => {
-      return <Organization key={org.id} org={org} />;
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <h1>Organizations</h1>
-        {this.createOrgCards()}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h1>Organizations</h1>
+      {organizations.map(org => (
+        <Organization key={org.id} org={org} />
+      ))}
+    </div>
+  );
+};
 
 export default OrganizationContainer;
